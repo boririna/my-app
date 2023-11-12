@@ -1,0 +1,37 @@
+.game {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: blueviolet;
+}
+
+.field {
+	width: 300px;
+	display: flex;
+	flex-wrap: wrap;
+	border: solid 1px #8a2be2;
+}
+
+.field div {
+	font-size: 60px;
+	text-align: center;
+	box-sizing: border-box;
+	width: 33.33%;
+	height: 100px;
+	padding: 0 auto;
+	border: solid 1px blueviolet;
+}
+
+.field img {
+	width: 98px;
+}
+
+.displaySymbol {
+	display: block;
+}
+
+.dontDisplaySymbol {
+	display: none;
+}
