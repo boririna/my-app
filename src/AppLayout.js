@@ -1,54 +1,44 @@
+import PropTypes from 'prop-types';
+
 import styles from './App.module.css';
-import cross from './cross.png';
-import zero from './zero.png';
+import { BoardContainer } from './components/board/Board';
+import { InfoContainer } from './components/info/Info';
 
-export const AppLayout = ({ nextTurnSymbol, board, isEmptyBoardField, onClick }) => {
-	// const getCell = (board, id) => {
-	// 	return 'x', 'o', ''
-	// }
-
+export const AppLayout = ({
+	nextTurnSymbol,
+	board,
+	handleClick,
+	draw,
+	winner,
+	handleReset,
+}) => {
 	return (
 		<div>
 			<div className={styles.game}>
 				<h1>Крестики-нолики</h1>
-				<h2>Ходит: х</h2>
-				<div
-					className={styles.field}
-					onClick={(event) =>
-						onClick(nextTurnSymbol, event.target.getAttribute('id'))
-					}
-				>
-					<div id="0">
-						<img
-							src={cross}
-							alt="zero"
-							className={
-								isEmptyBoardField
-									? styles.dontDisplaySymbol
-									: styles.displaySymbol
-							}
-						/>
-					</div>
-					<div id="1">
-						<img
-							src={zero}
-							alt="zero"
-							className={
-								isEmptyBoardField
-									? styles.dontDisplaySymbol
-									: styles.displaySymbol
-							}
-						/>
-					</div>
-					<div>x</div>
-					<div>x</div>
-					<div>o</div>
-					<div>x</div>
-					<div>x</div>
-					<div>o</div>
-					<div>x</div>
+
+				<InfoContainer
+					draw={draw}
+					winner={winner}
+					nextTurnSymbol={nextTurnSymbol}
+				/>
+				<BoardContainer board={board} onClick={handleClick} />
+
+				<div className={styles.buttonContainer}>
+					<button className={styles.resetButton} onClick={handleReset}>
+						Начать заново
+					</button>
 				</div>
 			</div>
 		</div>
 	);
+};
+
+AppLayout.propTypes = {
+	nextTurnSymbol: PropTypes.string,
+	board: PropTypes.array,
+	handleClick: PropTypes.func,
+	draw: PropTypes.bool,
+	winner: PropTypes.bool,
+	handleReset: PropTypes.func,
 };

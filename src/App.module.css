@@ -7,31 +7,26 @@
 	color: blueviolet;
 }
 
-.field {
-	width: 300px;
-	display: flex;
-	flex-wrap: wrap;
-	border: solid 1px #8a2be2;
+.buttonContainer {
+	height: 80px;
 }
 
-.field div {
-	font-size: 60px;
-	text-align: center;
-	box-sizing: border-box;
-	width: 33.33%;
-	height: 100px;
-	padding: 0 auto;
-	border: solid 1px blueviolet;
+.resetButton {
+	margin-top: 20px;
+	padding: 6px 12px;
+	background-color: #8a2be2;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	font-size: 20px;
+	transition: 0.1s;
 }
 
-.field img {
-	width: 98px;
+.resetButton:hover {
+	background-color: #9a3ef0;
+	cursor: pointer;
 }
 
-.displaySymbol {
-	display: block;
-}
-
-.dontDisplaySymbol {
-	display: none;
+.resetButton:active {
+	font-size: 19px;
 }
