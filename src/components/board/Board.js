@@ -6,7 +6,7 @@ const BoardLayout = ({ board, onClick }) => {
 		<div className={styles.field}>
 			{board.map((cell, index) => {
 				return (
-					// не понятно, почему колбэк должна называться имеено onClick(index). Когда назвала ее handleClick(index), не работало
+					// не понятно, почему колбэк должна называться именно onClick(index). Когда назвала ее handleClick(index), не работало
 					<div key={index} onClick={() => onClick(index)}>
 						{cell && getImage(cell)}
 					</div>
