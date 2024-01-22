@@ -1,34 +1,36 @@
 import './App.css';
-// import { useState } from 'react';
+
 import { AppLayout } from './AppLayout';
 import { isDraw, isWinner } from './utils/check';
 // import { board as initialBoard } from './constants';
 import { store } from './store';
+import { useState } from 'react';
 
 export const AppContainer = () => {
-	// const [nextTurnSymbol, setNextTurnSymbol] = useState('X');
-	// const [board, setBoard] = useState(initialBoard);
-	// const [draw, setDraw] = useState(false);
-	// const [winner, setWinner] = useState(false);
 	// usf
 	// enf edf
+	const [render, setRender] = useState(0);
+
 	const nextTurnSymbol = store.getState().nextTurnSymbol;
 	const winner = store.getState().winner;
 	const draw = store.getState().draw;
 	const board = store.getState().board;
 
 	const handleClick = (ind) => {
+		const nextTurnSymbol = store.getState().nextTurnSymbol;
+		const winner = store.getState().winner;
+		const draw = store.getState().draw;
+		const board = store.getState().board;
+		setRender(render + 1);
+
 		if (board[ind] || draw || winner) return;
 
 		const newBoard = board.map((cell, idx) => (idx === ind ? nextTurnSymbol : cell));
 		// setBoard(newBoard);
-		console.log('calling SET_BOARD ' + newBoard);
 		store.dispatch({
 			type: 'SET_BOARD',
 			payload: newBoard,
 		});
-		console.log('calling SET_BOARD done');
-		console.log(newBoard);
 
 		if (isWinner(newBoard, nextTurnSymbol)) {
 			// setWinner(true);
@@ -46,23 +48,22 @@ export const AppContainer = () => {
 			});
 			return;
 		}
-		console.log('calling CHANGE_TURN_SYMBOL');
+
 		store.dispatch({
 			type: 'CHANGE_TURN_SYMBOL',
 			payload: nextTurnSymbol === 'X' ? 'O' : 'X',
 		});
-		console.log('calling CHANGE_TURN_SYMBOL done');
+
 		// setNextTurnSymbol((prev) => (prev === 'X' ? 'O' : 'X'));
 	};
 
+	store.subscribe(() => handleClick);
+
 	const handleReset = () => {
-		// setBoard(initialBoard);
-		// setNextTurnSymbol('X');
-		// setDraw(false);
-		// setWinner(false);
 		store.dispatch({
 			type: 'RESET',
 		});
+		setRender(render + 1);
 	};
 
 	return (

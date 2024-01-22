@@ -9,4 +9,4 @@ export const WIN_PATTERNS = [
 	[2, 4, 6], // Варианты побед по диагонали
 ];
 
-export const board = new Array(9).fill('');
+export const initialBoard = new Array(9).fill('');

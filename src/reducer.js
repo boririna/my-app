@@ -1,4 +1,4 @@
-import { board as initialBoard } from './constants';
+import { initialBoard } from './constants';
 
 const initialState = {
 	nextTurnSymbol: 'X',
@@ -8,8 +8,6 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
-	console.log('reducer ' + type);
-	console.log('reducer state' + state);
 	switch (type) {
 		case 'CHANGE_TURN_SYMBOL': {
 			return {
