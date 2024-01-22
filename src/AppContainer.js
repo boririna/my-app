@@ -63,7 +63,7 @@ export const AppContainer = () => {
 		store.dispatch({
 			type: 'RESET',
 		});
-		setRender(render + 1);
+		setRender(0);
 	};
 
 	return (
