@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { store } from './store';
 import styles from './App.module.css';
 import { BoardContainer } from './components/board/Board';
 import { InfoContainer } from './components/info/Info';

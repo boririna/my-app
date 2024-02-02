@@ -1,4 +1,4 @@
-import { initialBoard } from './constants';
+import { initialBoard } from '../constants';
 
 const initialState = {
 	nextTurnSymbol: 'X',
