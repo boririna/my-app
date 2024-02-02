@@ -1,8 +1,5 @@
 import './App.css';
-
 import { AppLayout } from './AppLayout';
-
-// import { board as initialBoard } from './constants';
 import { store } from './store/store';
 import { useState } from 'react';
 
