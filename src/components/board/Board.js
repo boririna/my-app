@@ -3,14 +3,15 @@ import { getImage } from '../../utils/getImage';
 import { store } from '../../store/store';
 import { useEffect, useState } from 'react';
 import { isDraw, isWinner } from '../../utils/check';
+import { useSelector } from 'react-redux';
 
 const BoardLayout = () => {
 	const [render, setRender] = useState(0);
 
-	const nextTurnSymbol = store.getState().nextTurnSymbol;
-	const winner = store.getState().winner;
-	const draw = store.getState().draw;
-	const board = store.getState().board;
+	const nextTurnSymbol = useSelector((state) => state.nextTurnSymbol);
+	const winner = useSelector((state) => state.winner);
+	const draw = useSelector((state) => state.draw);
+	const board = useSelector((state) => state.board);
 
 	const handleClick = (ind) => {
 		// setRender(render + 1);
@@ -49,13 +50,13 @@ const BoardLayout = () => {
 		// setNextTurnSymbol((prev) => (prev === 'X' ? 'O' : 'X'));
 	};
 
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setRender((prev) => prev + 1);
-		});
+	// useEffect(() => {
+	// 	const unsubscribe = store.subscribe(() => {
+	// 		setRender((prev) => prev + 1);
+	// 	});
 
-		return unsubscribe;
-	}, []);
+	// 	return unsubscribe;
+	// }, []);
 
 	return (
 		<div className={styles.field}>

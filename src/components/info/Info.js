@@ -11,13 +11,13 @@ export const InfoContainer = () => {
 	const winner = store.getState().winner;
 	const draw = store.getState().draw;
 
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setRender((prev) => prev + 1);
-		});
+	// useEffect(() => {
+	// 	const unsubscribe = store.subscribe(() => {
+	// 		setRender((prev) => prev + 1);
+	// 	});
 
-		return unsubscribe;
-	}, []);
+	// 	return unsubscribe;
+	// }, []);
 
 	const status = winner
 		? `Победил ${nextTurnSymbol}`
