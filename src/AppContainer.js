@@ -1,7 +1,7 @@
 import './App.css';
 import { AppLayout } from './AppLayout';
 import { store } from './store/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const AppContainer = () => {
 	// usf
@@ -14,6 +14,14 @@ export const AppContainer = () => {
 		});
 		setRender(0);
 	};
+
+	useEffect(() => {
+		const unsubscribe = store.subscribe(() => {
+			setRender((prev) => prev + 1);
+		});
+
+		return unsubscribe;
+	}, []);
 
 	return <AppLayout handleReset={handleReset} />;
 };

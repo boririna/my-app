@@ -1,31 +1,38 @@
 import styles from './Board.module.css';
 import { getImage } from '../../utils/getImage';
 import { store } from '../../store/store';
-import { useEffect, useState } from 'react';
 import { isDraw, isWinner } from '../../utils/check';
 
-const BoardLayout = () => {
-	const [render, setRender] = useState(0);
+const BoardLayout = ({ board, onClick }) => {
+	return (
+		<div className={styles.field}>
+			{board.map((cell, index) => {
+				return (
+					<div key={index} onClick={() => onClick(index)}>
+						{cell && getImage(cell)}
+					</div>
+				);
+			})}
+		</div>
+	);
+};
 
+export const BoardContainer = () => {
 	const nextTurnSymbol = store.getState().nextTurnSymbol;
 	const winner = store.getState().winner;
 	const draw = store.getState().draw;
 	const board = store.getState().board;
 
 	const handleClick = (ind) => {
-		// setRender(render + 1);
-
 		if (board[ind] || draw || winner) return;
 
 		const newBoard = board.map((cell, idx) => (idx === ind ? nextTurnSymbol : cell));
-		// setBoard(newBoard);
 		store.dispatch({
 			type: 'SET_BOARD',
 			payload: newBoard,
 		});
 
 		if (isWinner(newBoard, nextTurnSymbol)) {
-			// setWinner(true);
 			store.dispatch({
 				type: 'SET_WINNER',
 				payload: true,
@@ -33,7 +40,6 @@ const BoardLayout = () => {
 			return;
 		}
 		if (isDraw(newBoard)) {
-			// setDraw(true);
 			store.dispatch({
 				type: 'SET_DRAW',
 				payload: true,
@@ -45,32 +51,6 @@ const BoardLayout = () => {
 			type: 'CHANGE_TURN_SYMBOL',
 			payload: nextTurnSymbol === 'X' ? 'O' : 'X',
 		});
-
-		// setNextTurnSymbol((prev) => (prev === 'X' ? 'O' : 'X'));
 	};
-
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setRender((prev) => prev + 1);
-		});
-
-		return unsubscribe;
-	}, []);
-
-	return (
-		<div className={styles.field}>
-			{board.map((cell, index) => {
-				return (
-					// не понятно, почему колбэк должна называться именно onClick(index). Когда назвала ее handleClick(index), не работало
-					<div key={index} onClick={() => handleClick(index)}>
-						{cell && getImage(cell)}
-					</div>
-				);
-			})}
-		</div>
-	);
-};
-
-export const BoardContainer = ({ board, onClick }) => {
-	return <BoardLayout board={board} onClick={onClick} />;
+	return <BoardLayout board={board} onClick={handleClick} />;
 };

@@ -3,25 +3,14 @@ import styles from './App.module.css';
 import { BoardContainer } from './components/board/Board';
 import { InfoContainer } from './components/info/Info';
 
-export const AppLayout = ({
-	nextTurnSymbol,
-	board,
-	handleClick,
-	draw,
-	winner,
-	handleReset,
-}) => {
+export const AppLayout = ({ handleReset }) => {
 	return (
 		<div>
 			<div className={styles.game}>
 				<h1>Крестики-нолики</h1>
 
-				<InfoContainer
-					draw={draw}
-					winner={winner}
-					nextTurnSymbol={nextTurnSymbol}
-				/>
-				<BoardContainer board={board} onClick={handleClick} />
+				<InfoContainer />
+				<BoardContainer />
 
 				<div className={styles.buttonContainer}>
 					<button className={styles.resetButton} onClick={handleReset}>
