@@ -1,69 +1,22 @@
 import styles from './Board.module.css';
 import { getImage } from '../../utils/getImage';
-import { store } from '../../store/store';
-import { useEffect, useState } from 'react';
 import { isDraw, isWinner } from '../../utils/check';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTurnSymbol, setBoard, setDraw, setWinner } from '../../store/actions';
+import {
+	selectBoard,
+	selectDraw,
+	selectNextTurnSymbol,
+	selectWinner,
+} from '../../store/selectors';
 
-const BoardLayout = () => {
-	const [render, setRender] = useState(0);
-
-	const nextTurnSymbol = useSelector((state) => state.nextTurnSymbol);
-	const winner = useSelector((state) => state.winner);
-	const draw = useSelector((state) => state.draw);
-	const board = useSelector((state) => state.board);
-
-	const handleClick = (ind) => {
-		// setRender(render + 1);
-
-		if (board[ind] || draw || winner) return;
-
-		const newBoard = board.map((cell, idx) => (idx === ind ? nextTurnSymbol : cell));
-		// setBoard(newBoard);
-		store.dispatch({
-			type: 'SET_BOARD',
-			payload: newBoard,
-		});
-
-		if (isWinner(newBoard, nextTurnSymbol)) {
-			// setWinner(true);
-			store.dispatch({
-				type: 'SET_WINNER',
-				payload: true,
-			});
-			return;
-		}
-		if (isDraw(newBoard)) {
-			// setDraw(true);
-			store.dispatch({
-				type: 'SET_DRAW',
-				payload: true,
-			});
-			return;
-		}
-
-		store.dispatch({
-			type: 'CHANGE_TURN_SYMBOL',
-			payload: nextTurnSymbol === 'X' ? 'O' : 'X',
-		});
-
-		// setNextTurnSymbol((prev) => (prev === 'X' ? 'O' : 'X'));
-	};
-
-	// useEffect(() => {
-	// 	const unsubscribe = store.subscribe(() => {
-	// 		setRender((prev) => prev + 1);
-	// 	});
-
-	// 	return unsubscribe;
-	// }, []);
-
+const BoardLayout = ({ onClick }) => {
+	const board = useSelector(selectBoard);
 	return (
 		<div className={styles.field}>
 			{board.map((cell, index) => {
 				return (
-					// не понятно, почему колбэк должна называться именно onClick(index). Когда назвала ее handleClick(index), не работало
-					<div key={index} onClick={() => handleClick(index)}>
+					<div key={index} onClick={() => onClick(index)}>
 						{cell && getImage(cell)}
 					</div>
 				);
@@ -72,6 +25,32 @@ const BoardLayout = () => {
 	);
 };
 
-export const BoardContainer = ({ board, onClick }) => {
-	return <BoardLayout board={board} onClick={onClick} />;
+export const BoardContainer = () => {
+	const nextTurnSymbol = useSelector(selectNextTurnSymbol);
+	const winner = useSelector(selectWinner);
+	const draw = useSelector(selectDraw);
+	const board = useSelector(selectBoard);
+
+	const dispatch = useDispatch();
+
+	const handleClick = (ind) => {
+		if (board[ind] || draw || winner) return;
+
+		const newBoard = board.map((cell, idx) => (idx === ind ? nextTurnSymbol : cell));
+
+		dispatch(setBoard(newBoard));
+
+		if (isWinner(newBoard, nextTurnSymbol)) {
+			dispatch(setWinner());
+			return;
+		}
+		if (isDraw(newBoard)) {
+			dispatch(setDraw());
+			return;
+		}
+
+		dispatch(changeTurnSymbol(nextTurnSymbol));
+	};
+
+	return <BoardLayout board={board} onClick={handleClick} />;
 };

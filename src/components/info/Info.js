@@ -1,23 +1,14 @@
-import { useEffect, useState } from 'react';
-import { store } from '../../store/store';
+import { useSelector } from 'react-redux';
+import { selectDraw, selectNextTurnSymbol, selectWinner } from '../../store/selectors';
 
 const InfoLayout = ({ status }) => {
 	return <h2>{status}</h2>;
 };
 
 export const InfoContainer = () => {
-	const [render, setRender] = useState(0);
-	const nextTurnSymbol = store.getState().nextTurnSymbol;
-	const winner = store.getState().winner;
-	const draw = store.getState().draw;
-
-	// useEffect(() => {
-	// 	const unsubscribe = store.subscribe(() => {
-	// 		setRender((prev) => prev + 1);
-	// 	});
-
-	// 	return unsubscribe;
-	// }, []);
+	const nextTurnSymbol = useSelector(selectNextTurnSymbol);
+	const winner = useSelector(selectWinner);
+	const draw = useSelector(selectDraw);
 
 	const status = winner
 		? `Победил ${nextTurnSymbol}`
@@ -25,12 +16,5 @@ export const InfoContainer = () => {
 		? `Ничья`
 		: `Ходит ${nextTurnSymbol}`;
 
-	return (
-		<InfoLayout
-			draw={draw}
-			winner={winner}
-			nextTurnSymbol={nextTurnSymbol}
-			status={status}
-		/>
-	);
+	return <InfoLayout status={status} />;
 };

@@ -33,7 +33,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 				board: payload,
 			};
 		}
-		case 'RESET': {
+		case 'RESET_GAME': {
 			return initialState;
 		}
 		default:

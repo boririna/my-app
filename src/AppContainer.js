@@ -1,18 +1,16 @@
+import { useDispatch } from 'react-redux';
 import './App.css';
 import { AppLayout } from './AppLayout';
-import { store } from './store/store';
-import { useState } from 'react';
+import { RESET_GAME } from './store/actions';
 
 export const AppContainer = () => {
 	// usf
 	// enf edf
-	const [render, setRender] = useState(0);
+
+	const dispatch = useDispatch();
 
 	const handleReset = () => {
-		store.dispatch({
-			type: 'RESET',
-		});
-		setRender(0);
+		dispatch(RESET_GAME);
 	};
 
 	return <AppLayout handleReset={handleReset} />;
