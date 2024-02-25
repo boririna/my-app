@@ -1,15 +1,22 @@
 import PropTypes from 'prop-types';
 import styles from './App.module.css';
 import { BoardContainer } from './components/board/Board';
-import { InfoContainer } from './components/info/Info';
+import { Info } from './components/info/Info';
+import { RESET_GAME } from './store/actions';
+import { useDispatch } from 'react-redux';
 
-export const AppLayout = ({ handleReset }) => {
+export const AppLayout = () => {
+	const dispatch = useDispatch();
+
+	const handleReset = () => {
+		dispatch(RESET_GAME);
+	};
 	return (
 		<div>
 			<div className={styles.game}>
 				<h1>Крестики-нолики</h1>
 
-				<InfoContainer />
+				<Info />
 				<BoardContainer />
 
 				<div className={styles.buttonContainer}>

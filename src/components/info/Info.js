@@ -1,15 +1,10 @@
-import { useSelector } from 'react-redux';
-import { selectDraw, selectNextTurnSymbol, selectWinner } from '../../store/selectors';
+import { connect } from 'react-redux';
 
 const InfoLayout = ({ status }) => {
 	return <h2>{status}</h2>;
 };
 
-export const InfoContainer = () => {
-	const nextTurnSymbol = useSelector(selectNextTurnSymbol);
-	const winner = useSelector(selectWinner);
-	const draw = useSelector(selectDraw);
-
+export const InfoContainer = ({ nextTurnSymbol, winner, draw }) => {
 	const status = winner
 		? `Победил ${nextTurnSymbol}`
 		: draw
@@ -18,3 +13,9 @@ export const InfoContainer = () => {
 
 	return <InfoLayout status={status} />;
 };
+const mapStateToProps = (state) => ({
+	nextTurnSymbol: state.nextTurnSymbol,
+	winner: state.winner,
+	draw: state.draw,
+});
+export const Info = connect(mapStateToProps)(InfoContainer);
